@@ -11,7 +11,7 @@ export enum LogType {
  * @summary 編號對齊類型
  */
 const LogConf: { [type: number]: { title: string, color: string } } = {
-    1: { title: "標準日誌", color: "color:black;" },
+    1: { title: `標準日誌`, color: `color:black;` },
 };
 
 /**
@@ -54,7 +54,7 @@ export class Logger {
      * @param func 功能
      * @param hint 補充說明
      */
-    public static async group(func: Function, hint: string = ""): Promise<void> {
+    public static async group(func: Function, hint: string = ``): Promise<void> {
         console.group(hint);
         await func();
         console.groupEnd();
@@ -65,7 +65,7 @@ export class Logger {
      * @param msg 訊息
      * @param hint 補充說明
      */
-    public static trace(msg: any, hint: string = ""): void {
+    public static trace(msg: any, hint: string = ``): void {
         this.print(LogType.Trace, msg, hint);
     }
 
@@ -75,7 +75,7 @@ export class Logger {
      * @param msg 訊息
      * @param hint 補充說明
      */
-    private static print(type: LogType, msg: any, hint: string = ""): void {
+    private static print(type: LogType, msg: any, hint: string = ``): void {
         if (this.opened(type)) {
             let conf = LogConf[type];
 
@@ -91,11 +91,11 @@ export class Logger {
      * 取得當前時間
      */
     private static getNowStr(): string {
-        let res = "";
+        let res = ``;
 
         // 空位補0並加入字串
-        let func = function(time: number, count: number, symbol: string = ""): void {
-            res += (Array(3).join("0") + time).slice(-count) + symbol;
+        let func = function(time: number, count: number, symbol: string = ``): void {
+            res += (Array(3).join(`0`) + time).slice(-count) + symbol;
         }
 
         let date = new Date();
