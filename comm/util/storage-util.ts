@@ -65,7 +65,7 @@ export class StorageUtil {
      * @param key 
      * @param def 預設值
      */
-    public static load(key: string, def: any): any {
+    private static load(key: string, def: any): any {
         if (!key) {
             console.warn(`讀檔鍵為空`);
             return def;
@@ -82,7 +82,7 @@ export class StorageUtil {
      * @param def 預設值
      */
     public static getNumber(key: string, def: number = 0): number {
-        return Number(this.load(key, 0));
+        return Number(this.load(key, def));
     }
 
     /**
@@ -91,7 +91,16 @@ export class StorageUtil {
      * @param def 預設值
      */
     public static getBool(key: string, def: boolean = false): boolean {
-        return Boolean(this.load(key, false));
+        return Boolean(this.load(key, def));
+    }
+
+    /**
+     * 取字串
+     * @param key 
+     * @param def 預設值
+     */
+    public static getStr(key: string, def: string = ``): string {
+        return String(this.load(key, def));
     }
 
     /**
