@@ -3,7 +3,7 @@
  * @summary 編號使用2進位制
  */
 export enum LogType {
-    // TODO
+    Trace = 1,  // 標準日誌
 }
 
 /**
@@ -11,7 +11,7 @@ export enum LogType {
  * @summary 編號對齊類型
  */
 const LogConf: { [type: number]: { title: string, color: string } } = {
-    // TODO
+    1: { title: "標準日誌", color: "color:black;" },
 };
 
 /**
@@ -39,12 +39,43 @@ export class Logger {
     }
 
     /**
+     * 計時
+     * @param tag 標籤
+     * @param func 功能
+     */
+    public static async time(tag: string, func: Function): Promise<void> {
+        console.time(tag);
+        await func();
+        console.timeEnd(tag);
+    }
+
+    /**
+     * 群組
+     * @param func 功能
+     * @param hint 補充說明
+     */
+    public static async group(func: Function, hint: string = ""): Promise<void> {
+        console.group(hint);
+        await func();
+        console.groupEnd();
+    }
+
+    /**
+     * 打印標準日誌
+     * @param msg 訊息
+     * @param hint 補充說明
+     */
+    public static trace(msg: any, hint: string = ""): void {
+        this.print(LogType.Trace, msg, hint);
+    }
+
+    /**
      * 打印日誌
      * @param type 種類
      * @param msg 訊息
      * @param hint 補充說明
      */
-    public static print(type: LogType, msg: any, hint: string = ""): void {
+    private static print(type: LogType, msg: any, hint: string = ""): void {
         if (this.opened(type)) {
             let conf = LogConf[type];
 
@@ -52,7 +83,7 @@ export class Logger {
             let time = this.getNowStr();
             let title = conf.title;
 
-            console.log(`%c[%s][%s][%s]:%o`, color, time, title, hint, msg);
+            console.log(`%c[%s][%s]%s:%o`, color, time, title, hint, msg);
         }
     }
 
