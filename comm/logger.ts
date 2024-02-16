@@ -51,9 +51,8 @@ export class Logger {
             let color = conf.color;
             let time = this.getNowStr();
             let title = conf.title;
-            let stack = this.getCallStack();
 
-            console.log(`%c[%s][%s][%s][%s]:%o`, color, time, title, stack, hint, msg);
+            console.log(`%c[%s][%s][%s]:%o`, color, time, title, hint, msg);
         }
     }
 
@@ -75,13 +74,5 @@ export class Logger {
         func(date.getMilliseconds(), 3);
 
         return res;
-    }
-
-    /**
-     * 取得呼叫堆疊
-     * @param idx 
-     */
-    private static getCallStack(idx: number = 5): string {
-        return "";
     }
 }
