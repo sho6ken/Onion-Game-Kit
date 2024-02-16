@@ -3,7 +3,7 @@ import { sys } from "cc";
 /**
  * 本地存儲
  */
-export class Storage {
+export class StorageUtil {
     /**
      * 清空本地存檔
      */
