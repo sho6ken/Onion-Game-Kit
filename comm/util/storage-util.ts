@@ -53,10 +53,7 @@ export class StorageUtil {
                 return;
             }
         }
-        else if (typeof value === `number`) {
-            value = value.toString();
-        }
-
+        
         sys.localStorage.setItem(key, value);
     }
 
