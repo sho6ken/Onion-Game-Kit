@@ -80,7 +80,7 @@ export class Logger {
             let conf = LogConf[type];
 
             let color = conf.color;
-            let time = this.getNowStr();
+            let time = this.getTimeStr();
             let title = conf.title;
             let stack = this.getCallStack();
 
@@ -107,9 +107,9 @@ export class Logger {
     }
 
     /**
-     * 取得當前時間
+     * 取得時間字段
      */
-    private static getNowStr(): string {
+    private static getTimeStr(): string {
         let res = ``;
 
         // 空位補0並加入字串
