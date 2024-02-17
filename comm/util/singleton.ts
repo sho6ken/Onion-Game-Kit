@@ -42,3 +42,41 @@ interface SingleType<T extends Singleton> {
      */
     new(): T;
 }
+
+/**
+ * 單例管理
+ */
+export class SingleMgr implements Singleton {
+    // 名稱
+    public get name(): string { return `單例管理`; }
+
+    // 常駐不釋放
+    public get hold(): boolean { return true; }
+
+    // 實例
+    private static _inst: SingleMgr = null;
+    public static get inst(): SingleMgr { return this._inst || (this._inst = new SingleMgr()); }
+
+    // 單例數據
+    private _data: Map<string, Singleton> = new Map();
+
+    /**
+     * 取得
+     * @param type 單例類別
+     * @param isCreate 當查無此類時, 是否生成新的實例
+     * @param params 建構單例時的初始化參數
+     */
+    public static get<T extends Singleton>(type: SingleType<T>, isCreate: boolean = false, ...params: any[]): T | null {
+        // TODO
+        return null;
+    }
+
+    /**
+     * 釋放
+     * @param type 空值代表釋放所有非常駐對象
+     */
+    public static free<T extends Singleton>(type?: SingleType<T>): boolean {
+        // TODO
+        return false;
+    }
+}
