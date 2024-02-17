@@ -80,17 +80,36 @@ export class Logger {
             let conf = LogConf[type];
 
             let color = conf.color;
-            let time = this.getNowStr();
+            let time = this.getTimeStr();
             let title = conf.title;
+            let stack = this.getCallStack();
 
-            console.log(`%c[%s][%s]%s:%o`, color, time, title, hint, msg);
+            console.log(`%c[%s][%s][%s]%s:%o`, color, time, title, stack, hint, msg);
         }
     }
 
     /**
-     * 取得當前時間
+     * 取得調用位置
      */
-    private static getNowStr(): string {
+    private static getCallStack(): string {
+        let err = new Error();
+        let contents = err.stack!.split(`\n`);
+        
+        for (const elm of contents) {
+            let slices = elm.substring(7).split(` `);
+
+            if (slices.length >= 2 && elm.indexOf(this.name) == -1) {
+                return slices[0];
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * 取得時間字段
+     */
+    private static getTimeStr(): string {
         let res = ``;
 
         // 空位補0並加入字串
