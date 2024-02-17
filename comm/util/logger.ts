@@ -98,12 +98,12 @@ export class Logger {
         for (const elm of contents) {
             let slices = elm.substring(7).split(` `);
 
-            if (slices.length >= 2 && elm.indexOf(this.name) == -1) {
+            if (slices.length >= 2 && elm.indexOf(this.name) === -1) {
                 return slices[0];
             }
         }
 
-        return "";
+        return ``;
     }
 
     /**
