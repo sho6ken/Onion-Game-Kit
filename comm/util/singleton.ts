@@ -18,12 +18,12 @@ export interface Singleton {
      * 釋放
      * @param params 
      */
-    free?(): any;
+    free?(): void;
 
     /**
-     * 顯示資訊
+     * 清除數據
      */
-    info?(): void;
+    clear?(): void;
 }
 
 /**
@@ -67,7 +67,23 @@ export class SingleMgr implements Singleton {
      * @param params 建構單例時的初始化參數
      */
     public static get<T extends Singleton>(type: SingleType<T>, isCreate: boolean = false, ...params: any[]): T | null {
-        // TODO
+        let data = SingleMgr.inst._data;
+        let name = type.name;
+
+        if (data.has(name)) {
+            return <T>(data.get(name));
+        }
+        else if (isCreate) {
+            // 優先使用外部已建立實體
+            let inst = type.inst ?? new type();
+            data.set(name, inst);
+
+            console.log(`${name}單例初始化`);
+            inst.init && inst.init(...params);
+
+            return inst;
+        }
+
         return null;
     }
 
@@ -75,8 +91,28 @@ export class SingleMgr implements Singleton {
      * 釋放
      * @param type 空值代表釋放所有非常駐對象
      */
-    public static free<T extends Singleton>(type?: SingleType<T>): boolean {
-        // TODO
-        return false;
+    public static free<T extends Singleton>(type?: SingleType<T>): void {
+        let data = SingleMgr.inst._data;
+
+        // 執行銷毀
+        const execute = function(name: string): void {
+            let inst = data.get(name);
+
+            if (inst && inst.hold) {
+                console.log(`${name}單例釋放`);
+
+                inst.free && inst.free();
+                data.delete(name);
+            }
+        };
+
+        type ? execute(type.name) : data.forEach(elm => execute(elm.name));
+    }
+
+    /**
+     * 清除數據
+     */
+    public static clear(): void {
+        SingleMgr.inst._data.forEach(elm => elm.clear && elm.clear());
     }
 }
