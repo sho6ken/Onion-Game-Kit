@@ -47,15 +47,15 @@ interface SingleType<T extends Singleton> {
  * 單例管理
  */
 export class SingleMgr implements Singleton {
+    // 實例
+    private static _inst: SingleMgr = null;
+    public static get inst(): SingleMgr { return this._inst || (this._inst = new SingleMgr()); }
+
     // 名稱
     public get name(): string { return `單例管理`; }
 
     // 常駐不釋放
     public get hold(): boolean { return true; }
-
-    // 實例
-    private static _inst: SingleMgr = null;
-    public static get inst(): SingleMgr { return this._inst || (this._inst = new SingleMgr()); }
 
     // 單例數據
     private _data: Map<string, Singleton> = new Map();
@@ -67,7 +67,7 @@ export class SingleMgr implements Singleton {
      * @param params 建構單例時的初始化參數
      */
     public static get<T extends Singleton>(type: SingleType<T>, isCreate: boolean = false, ...params: any[]): T | null {
-        let data = SingleMgr.inst._data;
+        let data = this.inst._data;
         let name = type.name;
 
         if (data.has(name)) {
@@ -92,7 +92,7 @@ export class SingleMgr implements Singleton {
      * @param type 空值代表釋放所有非常駐對象
      */
     public static free<T extends Singleton>(type?: SingleType<T>): void {
-        let data = SingleMgr.inst._data;
+        let data = this.inst._data;
 
         // 執行銷毀
         const execute = function(name: string): void {
@@ -113,6 +113,6 @@ export class SingleMgr implements Singleton {
      * 清除數據
      */
     public static clear(): void {
-        SingleMgr.inst._data.forEach(elm => elm.clear && elm.clear());
+        this.inst._data.forEach(elm => elm.clear && elm.clear());
     }
 }
