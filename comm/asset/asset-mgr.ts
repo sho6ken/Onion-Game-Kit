@@ -127,8 +127,13 @@ export class AssetMgr implements Singleton {
             // 先佔位防止多次加載
             this.add(req.path, null, true);
 
-            req.bundle && await this.loadBundle(req.bundle);
-            this.add(req.path, await this._local.load(req.type, req.path, req.bundle), req.hold);
+            try {
+                req.bundle && await this.loadBundle(req.bundle);
+                this.add(req.path, await this._local.load(req.type, req.path, req.bundle), req.hold);
+            }
+            catch (err) {
+                this._assets.delete(req.path);
+            }
 
             console.timeEnd(req.path);
         }
@@ -142,11 +147,16 @@ export class AssetMgr implements Singleton {
      * @summary 處理重複加載問題
      */
     private async doLoadLocal<T extends Asset>(req: AssetReq<T>): Promise<T> {
-        return await new Promise(resolve => {
+        return await new Promise((resolve, reject) => {
             let data = null;
 
             do {
                 data = this._assets.get(req.path);
+
+                // 鍵值因故被移除
+                if (!data) {
+                    reject();
+                }
             }
             while (!data.asset)
 
