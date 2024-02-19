@@ -74,7 +74,7 @@ export class FolderLoader implements AssetLoader {
      * @param path 加載路徑
      * @param bundle 包名
      */
-    public async load<T extends Asset>(type: typeof Asset, path: string, bundle?: string): Promise<{ path: string, asset: T, bundle?: string }[]> {
+    public async load<T extends Asset>(type: typeof Asset, path: string, bundle?: string): Promise<{ path: string, asset: T }[]> {
         return new Promise((resolve, reject) => {
             let loader = bundle ? assetManager.getBundle(bundle) : resources;
 
@@ -93,7 +93,7 @@ export class FolderLoader implements AssetLoader {
                 let res = [];
 
                 assets.forEach((asset, idx) => {
-                    res.push({ path: infos[idx].path, asset: <T>asset, bundle: bundle });
+                    res.push({ path: infos[idx].path, asset: <T>asset });
                 });
 
                 return res;
