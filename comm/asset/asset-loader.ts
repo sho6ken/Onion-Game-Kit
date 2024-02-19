@@ -12,7 +12,7 @@ export interface AssetLoader {
 }
 
 /**
- * 本地資源加載
+ * 本地加載
  */
 export class LocalLoader implements AssetLoader {
     /**
@@ -26,13 +26,13 @@ export class LocalLoader implements AssetLoader {
             let loader = bundle ? assetManager.getBundle(bundle) : resources;
 
             if (!loader) {
-                console.error(`local asset load failed, bundle=${bundle}`);
+                console.error(`local load failed, bundle=${bundle}`);
                 return;
             }
 
             loader.load(path, type, (err, asset) => {
                 if (err) {
-                    console.error(`local asset load failed, path=${path}, bundle=${bundle}`);
+                    console.error(`local load failed, path=${path}, bundle=${bundle}`);
                     reject(err);
                 }
 
@@ -48,13 +48,13 @@ export class LocalLoader implements AssetLoader {
 export class BundleLoader implements AssetLoader {
     /**
      * 加載
-     * @param bundle 包名
+     * @param name 包名
      */
-    public async load(bundle: string): Promise<AssetManager.Bundle> {
+    public async load(name: string): Promise<AssetManager.Bundle> {
         return new Promise((resolve, reject) => {
-            assetManager.loadBundle(bundle, (err, bundle) => {
+            assetManager.loadBundle(name, (err, bundle) => {
                 if (err) {
-                    console.error(`bundle load failed, bundle=${bundle}`);
+                    console.error(`bundle load failed, bundle=${name}`);
                     reject(err);
                 }
 
