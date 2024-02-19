@@ -128,7 +128,7 @@ export class AssetMgr implements Singleton {
             this.add(req.path, null, true);
 
             try {
-                req.bundle && await this.loadBundle(req.bundle);
+                await this.loadBundle(req.bundle);
                 this.add(req.path, await this._local.load(req.type, req.path, req.bundle), req.hold);
             }
             catch (err) {
@@ -183,7 +183,7 @@ export class AssetMgr implements Singleton {
     public async loadFolder<T extends Asset>(req: AssetReq<T>): Promise<void> {
         console.time(req.path);
 
-        req.bundle && await this._bundle.load(req.bundle);
+        await this._bundle.load(req.bundle);
 
         let list = await this._folder.load(req.type, req.path, req.bundle);
         list.forEach(elm => this.add(elm.path, elm.asset, req.hold));
