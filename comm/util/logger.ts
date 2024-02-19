@@ -11,7 +11,7 @@ export enum LogType {
  * @summary 編號對齊類型
  */
 const LogConf: { [type: number]: { title: string, color: string } } = {
-    1: { title: `標準日誌`, color: `color:black;` },
+    1: { title: `standard`, color: `color:black;` },
 };
 
 /**

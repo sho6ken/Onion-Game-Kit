@@ -17,7 +17,7 @@ export class StorageUtil {
      */
     public static delete(key: string): void {
         if (!key) {
-            console.warn(`刪除鍵為空`);
+            console.warn(`storage del key is null`);
             return
         }
 
@@ -31,7 +31,7 @@ export class StorageUtil {
      */
     public static save(key: string, value: any): void {
         if (!key) {
-            console.warn(`存檔鍵為空`);
+            console.warn(`storage save key is null`);
             return;
         }
 
@@ -49,7 +49,7 @@ export class StorageUtil {
                 value = JSON.stringify(value);
             }
             catch (e) {
-                console.error(`存檔轉json失敗, key=${key}, value=${value}`);
+                console.error(`storage save trans to json failed, key=${key}, value=${value}`);
                 return;
             }
         }
@@ -64,7 +64,7 @@ export class StorageUtil {
      */
     private static load(key: string, def: any): any {
         if (!key) {
-            console.warn(`讀檔鍵為空`);
+            console.warn(`storage load key is null`);
             return def;
         }
 

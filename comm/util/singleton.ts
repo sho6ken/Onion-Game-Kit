@@ -78,7 +78,7 @@ export class SingleMgr implements Singleton {
             let inst = type.inst ?? new type();
             data.set(name, inst);
 
-            console.log(`${name}單例初始化`);
+            console.log(`${name} singleton init`);
             inst.init && inst.init(...params);
 
             return inst;
@@ -99,7 +99,7 @@ export class SingleMgr implements Singleton {
             let inst = data.get(name);
 
             if (inst && inst.hold) {
-                console.log(`${name}單例釋放`);
+                console.log(`${name} singleton free`);
 
                 inst.free && inst.free();
                 data.delete(name);
