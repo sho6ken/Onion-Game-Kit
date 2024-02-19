@@ -1,4 +1,4 @@
-import { Asset, AssetManager, WorldNode3DToLocalNodeUI, assetManager } from "cc";
+import { Asset, AssetManager, assetManager } from "cc";
 import { Singleton } from "../util/singleton";
 import { AssetLoader, BundleLoader, FolderLoader, LocalLoader } from "./asset-loader";
 
