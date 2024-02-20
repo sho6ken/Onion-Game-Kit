@@ -1,6 +1,6 @@
 import { Asset, AssetManager, assetManager } from "cc";
 import { Singleton } from "../util/singleton";
-import { AssetLoader, BundleLoader, FolderLoader, LocalLoader } from "./asset-loader";
+import { BundleLoader, FolderLoader, LocalLoader } from "./asset-loader";
 
 /**
  * 資源數據
@@ -52,23 +52,10 @@ export class AssetMgr implements Singleton {
     // 逾期時間
     private get _expire(): number { return this._now + (5 * 60); }
 
-    // 本地加載
-    private _local: AssetLoader = new LocalLoader();
-
-    // bundle加載
-    private _bundle: AssetLoader = new BundleLoader();
-
-    // 資料夾加載
-    private _folder: AssetLoader = new FolderLoader();
-
     /**
      * 釋放
      */
     public free(): void {
-        this._local = null;
-        this._bundle = null;
-        this._folder = null;
-
         this._assets.forEach(data => data.asset = null);
         this._assets.clear();
 
@@ -129,7 +116,7 @@ export class AssetMgr implements Singleton {
 
             try {
                 await this.loadBundle(req.bundle);
-                this.add(req.path, await this._local.load(req.type, req.path, req.bundle), req.hold);
+                this.add(req.path, await LocalLoader.load(<any>req.type, req.path, req.bundle), req.hold);
             }
             catch (err) {
                 this._assets.delete(req.path);
@@ -171,7 +158,7 @@ export class AssetMgr implements Singleton {
     private async loadBundle(name: string): Promise<void> {
         if (name && !this._bundles.has(name)) {
             console.time(name);
-            this._bundles.set(name, await this._bundle.load(name));
+            this._bundles.set(name, await BundleLoader.load(name));
             console.timeEnd(name);
         }
     }
@@ -183,9 +170,9 @@ export class AssetMgr implements Singleton {
     public async loadFolder<T extends Asset>(req: AssetReq<T>): Promise<void> {
         console.time(req.path);
 
-        await this._bundle.load(req.bundle);
+        await BundleLoader.load(req.bundle);
 
-        let list = await this._folder.load(req.type, req.path, req.bundle);
+        let list = await FolderLoader.load(<any>req.type, req.path, req.bundle);
         list.forEach(elm => this.add(elm.path, elm.asset, req.hold));
 
         console.timeEnd(req.path);

@@ -1,27 +1,16 @@
 import { Asset, AssetManager, assetManager, resources } from "cc";
 
 /**
- * 資源加載介面
- */
-export interface AssetLoader {
-    /**
-     * 加載
-     * @param params 
-     */
-    load(...params: any[]): Promise<any>;
-}
-
-/**
  * 本地加載
  */
-export class LocalLoader implements AssetLoader {
+export class LocalLoader {
     /**
      * 加載
      * @param type 資源總類
      * @param path 加載路徑
      * @param bundle 包名
      */
-    public async load<T extends Asset>(type: typeof Asset, path: string, bundle?: string): Promise<T> {
+    public static async load<T extends Asset>(type: typeof Asset, path: string, bundle?: string): Promise<T> {
         return new Promise((resolve, reject) => {
             let loader = bundle ? assetManager.getBundle(bundle) : resources;
 
@@ -45,12 +34,12 @@ export class LocalLoader implements AssetLoader {
 /**
  * bundle加載
  */
-export class BundleLoader implements AssetLoader {
+export class BundleLoader {
     /**
      * 加載
      * @param name 包名
      */
-    public async load(name: string): Promise<AssetManager.Bundle> {
+    public static async load(name: string): Promise<AssetManager.Bundle> {
         return new Promise((resolve, reject) => {
             assetManager.loadBundle(name, (err, bundle) => {
                 if (err) {
@@ -67,14 +56,14 @@ export class BundleLoader implements AssetLoader {
 /**
  * 資料夾加載
  */
-export class FolderLoader implements AssetLoader {
+export class FolderLoader {
     /**
      * 加載
      * @param type 資源總類
      * @param path 加載路徑
      * @param bundle 包名
      */
-    public async load<T extends Asset>(type: typeof Asset, path: string, bundle?: string): Promise<{ path: string, asset: T }[]> {
+    public static async load<T extends Asset>(type: typeof Asset, path: string, bundle?: string): Promise<{ path: string, asset: T }[]> {
         return new Promise((resolve, reject) => {
             let loader = bundle ? assetManager.getBundle(bundle) : resources;
 
