@@ -95,18 +95,20 @@ export class SingleMgr implements Singleton {
         let data = this.inst._data;
 
         // 執行銷毀
-        const execute = function(name: string): void {
-            let inst = data.get(name);
+        const execute = function(key: string): void {
+            let value = data.get(key);
 
-            if (inst && inst.hold) {
-                console.log(`${name} singleton free`);
+            if (value && value.hold) {
+                console.log(`${key} singleton free`);
 
-                inst.free && inst.free();
-                data.delete(name);
+                value.free && value.free();
+                value = null;
+
+                data.delete(key);
             }
         };
 
-        type ? execute(type.name) : data.forEach(elm => execute(elm.name));
+        type ? execute(type.name) : Array.from(data.keys()).forEach(name => execute(name));
     }
 
     /**
