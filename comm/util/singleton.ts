@@ -52,7 +52,7 @@ export class SingleMgr implements Singleton {
     public static get inst(): SingleMgr { return this._inst || (this._inst = new SingleMgr()); }
 
     // 名稱
-    public get name(): string { return `單例管理`; }
+    public get name(): string { return this.constructor.name; }
 
     // 常駐不釋放
     public get hold(): boolean { return true; }

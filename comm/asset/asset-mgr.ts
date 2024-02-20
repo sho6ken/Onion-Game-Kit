@@ -38,7 +38,7 @@ export interface AssetReq<T extends Asset> {
  */
 export class AssetMgr implements Singleton {
     // 名稱
-    public get name(): string { return `資源管理`; }
+    public get name(): string { return this.constructor.name; }
 
     // 已加載bundle
     private _bundles: Map<string, AssetManager.Bundle> = new Map();
