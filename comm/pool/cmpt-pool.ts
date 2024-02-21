@@ -28,12 +28,15 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
      * @param key 
      */
     public get(key: { prototype: Component }): Node {
-        let value = super.get(key);
+        return this.getCmpt(key).node;
+    }
 
-        let cmpt: any = value?.getComponent(key.prototype.name);
-        cmpt && cmpt.reuse && cmpt.reuse();
-
-        return value;
+    /**
+     * 取得物件
+     * @param key 
+     */
+    public getObj(key: { prototype: Component }): Node {
+        return this.getCmpt(key).node;
     }
 
     /**
