@@ -24,7 +24,7 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
     public get name(): string { return this.constructor.name; }
 
     /**
-     * 取得
+     * 取得物件
      * @param key 
      */
     public get(key: { prototype: Component }): Node {
@@ -34,6 +34,19 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
         cmpt && cmpt.reuse && cmpt.reuse();
 
         return value;
+    }
+
+    /**
+     * 取得組件
+     * @param key 
+     */
+    public getCmpt<T extends Component>(key: { prototype: T }): T {
+        let value = super.get(key);
+
+        let cmpt: any = value?.getComponent(key.prototype.name);
+        cmpt && cmpt.reuse && cmpt.reuse();
+
+        return <T>cmpt;
     }
 
     /**
