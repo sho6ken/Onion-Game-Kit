@@ -66,7 +66,7 @@ export class SingleMgr implements Singleton {
      * @param isCreate 當查無此類時, 是否生成新的實例
      * @param params 建構單例時的初始化參數
      */
-    public static get<T extends Singleton>(type: SingleType<T>, isCreate: boolean = false, ...params: any[]): T | null {
+    public static get<T extends Singleton>(type: SingleType<T>, isCreate: boolean = false, ...params: any[]): T {
         let data = this.inst._data;
         let name = type.name;
 

@@ -100,7 +100,7 @@ export class AssetMgr implements Singleton {
      * @param hold 常駐不釋放
      */
     private add<T extends Asset>(path: string, asset: T, hold: boolean): void {
-        path && this._assets.set(path, { asset: asset, hold: hold, expire: hold ? undefined : this._expire });
+        path && this._assets.set(path, { asset: asset, hold: hold, expire: hold ? null : this._expire });
     }
 
     /**
