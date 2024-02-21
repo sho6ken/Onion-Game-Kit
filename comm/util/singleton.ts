@@ -12,18 +12,19 @@ export interface Singleton {
      * 初始化
      * @param params 
      */
-    init?(...params: any[]): void;
+    init?(...params: any[]): any;
 
     /**
      * 釋放
      * @param params 
      */
-    free?(): void;
+    free?(...params: any[]): any;
 
     /**
      * 清除數據
+     * @param params
      */
-    clear?(): void;
+    clear?(...params: any[]): any;
 }
 
 /**
