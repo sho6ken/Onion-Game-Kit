@@ -42,7 +42,7 @@ interface Array<T> {
      * 去除重複元素
      * @returns 新數組
      */
-    repeat(): T[];
+    nonrepeat(): T[];
 }
 
 /**
@@ -115,7 +115,7 @@ Array.prototype.rand = function<T>(this: Array<T>): T {
 /**
  * 去除重複元素
  */
-Array.prototype.repeat = function<T>(this: Array<T>): T[] {
+Array.prototype.nonrepeat = function<T>(this: Array<T>): T[] {
     let res = [this[0]];
 
     for (const from of this) {
