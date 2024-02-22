@@ -68,7 +68,7 @@ export abstract class ObjPool<TK, TV> implements Singleton {
         if (key && value) {
             let list = this._data.get(key);
 
-            if (list == null) {
+            if (list === null) {
                 list = [];
                 this._data.set(key, list);
             }
