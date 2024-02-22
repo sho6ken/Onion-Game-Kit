@@ -37,6 +37,12 @@ interface Array<T> {
      * 隨機一個元素
      */
     rand(): T;
+
+    /**
+     * 去除重複元素
+     * @returns 新數組
+     */
+    repeat(): T[];
 }
 
 /**
@@ -104,4 +110,28 @@ Array.prototype.shuffle = function<T>(this: Array<T>): void {
  */
 Array.prototype.rand = function<T>(this: Array<T>): T {
     return this[Math.floor(Math.random() * this.length)];
+}
+
+/**
+ * 去除重複元素
+ */
+Array.prototype.repeat = function<T>(this: Array<T>): T[] {
+    let res = [this[0]];
+
+    for (const from of this) {
+        let repeated = false;
+
+        for (const to of res) {
+            if (from === to) {
+                repeated = true;
+                break;
+            }
+        }
+
+        if (!repeated) {
+            res.push(from);
+        }
+    }
+
+    return res;
 }
