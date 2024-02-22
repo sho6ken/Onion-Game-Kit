@@ -73,7 +73,7 @@ export abstract class ObjPool<TK, TV> implements Singleton {
                 this._data.set(key, list);
             }
             // 重複回收
-            else if (list.indexOf(value) != -1) {
+            else if (list.indexOf(value) !== -1) {
                 console.warn(``);
 
                 (value as Node)?.destroy();

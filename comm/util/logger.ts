@@ -35,7 +35,7 @@ export class Logger {
      * @param flag 
      */
     private static opened(type: LogType): boolean {
-        return (this._flags & type) != 0;
+        return (this._flags & type) !== 0;
     }
 
     /**
