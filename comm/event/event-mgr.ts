@@ -13,7 +13,7 @@ export class EventMgr implements Singleton {
     public get name(): string { return this.constructor.name; }
 
     // 類別事件紀錄
-    public static records: Map<Function, { type: EventType, cb: string, once: boolean }[]> = new Map();
+    public static rec: Map<Function, { type: EventType, cb: string, once: boolean }[]> = new Map();
 
     // 監聽註冊
     private static _register: Function = null;
@@ -29,7 +29,7 @@ export class EventMgr implements Singleton {
      * @param src 目標類別
      */
     public static register(src: Object): void {
-        this._register && this.records.get(src.constructor).forEach(elm => {
+        this._register && this.rec.get(src.constructor).forEach(elm => {
             this._register(src, elm.type, src[elm.cb], elm.once);
         }, this);
     }
