@@ -55,7 +55,7 @@ export class EventMgr implements Singleton {
                 map.get(obj).length = 0;
                 map.delete(obj);
                 map.size <= 0 && this._events.delete(type);
-            });
+            }, this);
         }.bind(this);
     }
 
