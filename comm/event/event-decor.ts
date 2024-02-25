@@ -4,8 +4,8 @@ import { EventMgr, EventType } from "./event-mgr";
  * 事件類別裝飾
  * @param on 調用此函式時註冊事件
  * @param off 調用此函式時註銷事件
- * @summary 非cmpt使用時需自定註冊及註銷函式名稱
- * @summary 沒有註冊註銷的需求可不使用
+ * @summary 使用函數同時進行註冊, 如果沒有需求的話可不使用
+ * @summary 非cmpt使用需自定義函式名稱
  */
 export function eventClass(on: string = "onEnable", off: string = "onDisable"): Function {
     return function(self: any): void {
