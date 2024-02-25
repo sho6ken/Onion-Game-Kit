@@ -87,9 +87,9 @@ export class AssetMgr implements Singleton {
      * 打印資訊
      */
     public info(): void {
-        console.group(`asset mgr info`);
-        console.table(Array.from(this._bundles.keys()));
-        console.table(Array.from(this._assets.keys()));
+        console.group(this.name);
+        console.table(this._bundles.keys());
+        console.table(this._assets.keys());
         console.groupEnd();
     }
 

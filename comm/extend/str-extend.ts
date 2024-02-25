@@ -28,5 +28,5 @@ String.prototype.format = function(this: string, ...params: (string | number)[])
  * 全部取代
  */
 String.prototype.exchange = function(this: string, passive: string, active: string): string {
-    return this.replace(new RegExp(passive, "gm"), active);
+    return this.replace(new RegExp(passive, `gm`), active);
 }

@@ -49,7 +49,7 @@ export class StorageUtil {
                 value = JSON.stringify(value);
             }
             catch (e) {
-                console.error(`storage save trans to json failed, key=${key}, value=${value}`);
+                console.warn(`storage save trans to json failed, key=${key}, value=${value}`);
                 return;
             }
         }
