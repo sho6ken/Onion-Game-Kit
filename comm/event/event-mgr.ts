@@ -168,7 +168,21 @@ export class EventMgr implements Singleton {
      * 資訊
      */
     public info(): void {
-        // TODO
+        console.group(this.name);
+
+        this._events.forEach((map, type) => {
+            console.group(type);
+            
+            map.forEach((list, obj) => {
+                console.group(obj.constructor.name);
+                console.table(list);
+                console.groupEnd();
+            });
+
+            console.groupEnd();
+        });
+
+        console.groupEnd();
     }
 }
 
