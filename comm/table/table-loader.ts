@@ -25,8 +25,7 @@ export class TableLoader {
             // 將數據注入各表
             for (let i = 0; i < len; i++) {
                 let table = tables[i];
-
-                let asset = await SingleMgr.get(AssetMgr).loadLocal(JsonAsset, table.path, table.bundle);
+                let asset = await SingleMgr.get(AssetMgr).loadLocal(JsonAsset, table.path, true, table.bundle);
                 table.init(asset.json);
 
                 progress(++count, len);

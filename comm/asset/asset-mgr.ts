@@ -90,10 +90,10 @@ export class AssetMgr implements Singleton {
      * 本地加載
      * @param type 資源種類
      * @param path 加載路徑
-     * @param bundle 包名
      * @param hold 常駐不釋放
+     * @param bundle 包名
      */
-    public async loadLocal<T extends Asset>(type: { prototype: T }, path: string, bundle?: string, hold?: boolean): Promise<T> {
+    public async loadLocal<T extends Asset>(type: { prototype: T }, path: string, hold: boolean = true, bundle?: string): Promise<T> {
         if (!this._assets.has(path)) {
             console.timeEnd(path);
 
@@ -153,10 +153,10 @@ export class AssetMgr implements Singleton {
      * 資料夾加載
      * @param type 資源種類
      * @param path 加載路徑
-     * @param bundle 包名
      * @param hold 常駐不釋放
+     * @param bundle 包名
      */
-    public async loadFolder<T extends Asset>(type: { prototype: T }, path: string, bundle?: string, hold?: boolean): Promise<void> {
+    public async loadFolder<T extends Asset>(type: { prototype: T }, path: string, hold: boolean = true, bundle?: string): Promise<void> {
         console.time(path);
 
         await BundleLoader.load(bundle);
