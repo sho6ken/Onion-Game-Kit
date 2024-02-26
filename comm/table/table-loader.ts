@@ -19,7 +19,7 @@ export class TableLoader {
         progress(count, len);
 
         return new Promise(async resolve => {
-            let tag = `start data tables load, size=${len}`;
+            let tag = `start load data tables, size=${len}`;
             console.time(tag);
 
             // 將數據注入各表
