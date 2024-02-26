@@ -1,5 +1,5 @@
 /**
- * json工具
+ * json
  */
 export class JsonUtil {
     /**

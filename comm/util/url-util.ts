@@ -1,5 +1,5 @@
 /**
- * 網址工具
+ * 網址
  */
 export class UrlUtil {
     /**

@@ -1,7 +1,7 @@
 import { Vec2 } from "cc";
 
 /**
- * 角度工具
+ * 角度
  */
 export class AngleUtil {
     /**
