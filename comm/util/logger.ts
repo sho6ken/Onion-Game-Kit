@@ -113,7 +113,7 @@ export class Logger {
         let res = ``;
 
         // 空位補0並加入字串
-        let func = function(time: number, count: number, symbol: string = ``): void {
+        const func = function(time: number, count: number, symbol: string = ``): void {
             res += (Array(3).join(`0`) + time).slice(-count) + symbol;
         }
 
