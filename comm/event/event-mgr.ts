@@ -189,4 +189,4 @@ export class EventMgr implements Singleton {
 /**
  * 讓事件管理在cocos之前啟動
  */
-SingleMgr.get(EventMgr, true);
+SingleMgr.get(EventMgr);
