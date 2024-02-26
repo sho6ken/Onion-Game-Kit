@@ -17,23 +17,6 @@ export interface AssetData {
 }
 
 /**
- * 資源取得參數
- */
-export interface AssetReq<T extends Asset> {
-    // 資源種類
-    type: T;
-
-    // 加載路徑
-    path: string;
-
-    // 包名
-    bundle?: string;
-
-    // 常駐不釋放
-    hold?: boolean;
-}
-
-/**
  * 資源管理
  */
 export class AssetMgr implements Singleton {
@@ -105,40 +88,43 @@ export class AssetMgr implements Singleton {
 
     /**
      * 本地加載
-     * @param req 資源取得參數
+     * @param type 資源種類
+     * @param path 加載路徑
+     * @param bundle 包名
+     * @param hold 常駐不釋放
      */
-    public async loadLocal<T extends Asset>(req: AssetReq<T>): Promise<T> {
-        if (!this._assets.has(req.path)) {
-            console.timeEnd(req.path);
+    public async loadLocal<T extends Asset>(type: { prototype: T }, path: string, bundle?: string, hold?: boolean): Promise<T> {
+        if (!this._assets.has(path)) {
+            console.timeEnd(path);
 
             // 先佔位防止多次加載
-            this.add(req.path, null, true);
+            this.add(path, null, true);
 
             try {
-                await this.loadBundle(req.bundle);
-                this.add(req.path, await LocalLoader.load(<any>req.type, req.path, req.bundle), req.hold);
+                await this.loadBundle(bundle);
+                this.add(path, await LocalLoader.load(<any>type, path, bundle), hold);
             }
             catch (err) {
-                this._assets.delete(req.path);
+                this._assets.delete(path);
             }
 
-            console.timeEnd(req.path);
+            console.timeEnd(path);
         }
 
-        return await this.doLoadLocal(req);
+        return await this.doLoadLocal(path) as T;
     }
 
     /**
      * 實作本地加載
-     * @param req 資源取得參數
+     * @param path 加載路徑
      * @summary 處理重複加載問題
      */
-    private async doLoadLocal<T extends Asset>(req: AssetReq<T>): Promise<T> {
+    private async doLoadLocal(path: string): Promise<Asset> {
         return await new Promise((resolve, reject) => {
             let data = null;
 
             do {
-                data = this._assets.get(req.path);
+                data = this._assets.get(path);
 
                 // 鍵值因故被移除
                 if (!data) {
@@ -165,16 +151,19 @@ export class AssetMgr implements Singleton {
 
     /**
      * 資料夾加載
-     * @param req 
+     * @param type 資源種類
+     * @param path 加載路徑
+     * @param bundle 包名
+     * @param hold 常駐不釋放
      */
-    public async loadFolder<T extends Asset>(req: AssetReq<T>): Promise<void> {
-        console.time(req.path);
+    public async loadFolder<T extends Asset>(type: { prototype: T }, path: string, bundle?: string, hold?: boolean): Promise<void> {
+        console.time(path);
 
-        await BundleLoader.load(req.bundle);
+        await BundleLoader.load(bundle);
 
-        let list = await FolderLoader.load(<any>req.type, req.path, req.bundle);
-        list.forEach(elm => this.add(elm.path, elm.asset, req.hold));
+        let list = await FolderLoader.load(<any>type, path, bundle);
+        list.forEach(elm => this.add(path, elm.asset, hold));
 
-        console.timeEnd(req.path);
+        console.timeEnd(path);
     }
 }
