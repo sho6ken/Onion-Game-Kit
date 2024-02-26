@@ -24,8 +24,11 @@ export abstract class TableData<T extends TableStruct> implements Singleton {
     // 名稱
     public get name(): string { return this.constructor.name; }
 
-    // 加載位置
-    public abstract get url(): string;
+    // 加載路徑
+    public abstract get path(): string;
+
+    // 加載包名
+    public abstract get bundle(): string;
 
     // 資料內容
     protected _data: Map<number, T> = new Map();
