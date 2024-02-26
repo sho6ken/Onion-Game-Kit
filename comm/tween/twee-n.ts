@@ -17,8 +17,47 @@ export class TweeN {
     // 群組
     private _group: TweeNGroup = null;
 
+    // 已開始
+    private _stared: boolean = false;
+
+    // 已暫停
+    private _paused: boolean = false;
+
     // 起始值
     private _begin: number = 0;
+
+    // 當前值
+    private _curr: number = 0;
+
+    // 最終值
+    private _end: number = 0;
+
+    // 漸變值
+    private _fade: number = 0;
+
+    // 緩動方式
+    private _easing: Function = null;
+
+    // 延遲開始
+    private _delay: number = 0;
+
+    // 緩動時間
+    private _time: number = 0;
+
+    // 剩餘秒數
+    private _left: number = 0;
+
+    // 開始回調
+    private _onStart: Function = null;
+
+    // 更新回調
+    private _onUpdate: Function = null;
+
+    // 結束回調
+    private _onComplete: Function = null;
+
+    // 接續緩動
+    private _next: TweeN = null;
 
     /**
      * 
@@ -65,7 +104,7 @@ export class TweeN {
      * @param sec  
      */
     public delay(sec: number): this {
-        // TODO
+        this._delay = sec;
         return this;
     }
 
@@ -73,7 +112,12 @@ export class TweeN {
      * 開始
      */
     public start(): this {
-        // TODO
+        if (!this._stared) {
+            this._stared = true;
+            this._paused = false;
+            this._group.add(this);
+        }
+
         return this;
     }
 
@@ -81,7 +125,12 @@ export class TweeN {
      * 停止
      */
     public stop(): this {
-        // TODO
+        if (this._stared) {
+            this._stared = false;
+            this._paused = false;
+            this._group.remove(this);
+        }
+
         return this;
     }
 
@@ -89,7 +138,11 @@ export class TweeN {
      * 暫停
      */
     public pause(): this {
-        // TODO
+        if (this._stared && !this._paused) {
+            this._paused = true;
+            this._group.remove(this);
+        }
+
         return this;
     }
 
@@ -97,7 +150,11 @@ export class TweeN {
      * 繼續
      */
     public resume(): this {
-        // TODO
+        if (this._stared && this._paused) {
+            this._paused = false;
+            this._group.add(this);
+        }
+
         return this;
     }
 
@@ -105,7 +162,7 @@ export class TweeN {
      * 強制完成 
      */
     public finish(): this {
-        // TODO
+        this.update(Infinity);
         return this;
     }
 
@@ -114,7 +171,7 @@ export class TweeN {
      * @param type tweeNEasing.linear
      */
     public easing(type: Function): this {
-        // TODO
+        this._easing = type;
         return this;
     }
 
@@ -123,7 +180,7 @@ export class TweeN {
      * @param event 
      */
     public onStart(event: Function): this {
-        // TODO
+        this._onStart = event;
         return this;
     }
 
@@ -132,7 +189,7 @@ export class TweeN {
      * @param event  
      */
     public onUpdate(event: Function): this {
-        // TODO
+        this._onUpdate = event;
         return this;
     }
 
@@ -141,7 +198,7 @@ export class TweeN {
      * @param event 
      */
     public onComplete(event: Function): this {
-        // TODO
+        this._onComplete = event;
         return this;
     }
 }
