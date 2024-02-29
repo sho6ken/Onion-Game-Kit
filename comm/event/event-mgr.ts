@@ -116,7 +116,7 @@ export class EventMgr implements Singleton {
         let list = map?.get(obj);
 
         let idx = list?.findIndex(elm => { return elm.cb === cb }) ?? -1;
-        idx != -1 && list.splice(idx, 1);
+        idx !== -1 && list.splice(idx, 1);
 
         if (list && list.length > 0) {
             map.delete(obj);

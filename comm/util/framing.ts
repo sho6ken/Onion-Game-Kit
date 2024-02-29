@@ -33,7 +33,7 @@ export abstract class Framing {
                 let start = Date.now();
 
                 for (let iter = generator.next(); ; iter = generator.next()) {
-                    if (iter == null || iter.done) {
+                    if (iter === null || iter.done) {
                         resolve();
                         return;
                     }

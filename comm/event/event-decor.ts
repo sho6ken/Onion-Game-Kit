@@ -8,7 +8,7 @@ import { EventMgr, EventType } from "./event-mgr";
  * @summary 使用函數同時進行註冊, 如果沒有需求的話可不使用
  * @summary 非cmpt使用需自定義函式名稱
  */
-export function eventClass(on: string = "onEnable", off: string = "onDisable"): Function {
+export function eventClass(on: string = `onEnable`, off: string = "onDisable"): Function {
     return function(self: any): void {
         if (on) {
             let func = self.prototype[on];
@@ -81,7 +81,7 @@ export function eventVar(type: EventType): Function {
         const setter = function(this: any, value: any): void {
             let old = this[field];
 
-            if (value != old) {
+            if (value !== old) {
                 this[field] = value;
                 SingleMgr.get(EventMgr).emit(type, value, old);
             }

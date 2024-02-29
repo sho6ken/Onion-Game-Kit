@@ -32,6 +32,6 @@ export class UrlUtil {
             url = url.slice(0, -1);  // 去掉最後的&
         }
 
-        window.history.pushState(null, "", url);
+        window.history.pushState(null, ``, url);
     }
 }
