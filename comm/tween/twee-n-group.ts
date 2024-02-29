@@ -9,14 +9,16 @@ export class TweeNGroup {
     private _working: { [id: number]: TweeN } = {};
 
     // 等待加入工作的緩動
-    private _waiting: { [id: number]: TweeN } = {};
+    private _rookies: { [id: number]: TweeN } = {};
 
     /**
      * 新增
      * @param tween 
      */
     public add(tween: TweeN): void {
-        // TODO
+        let id = tween.id;
+        this._working[id] = tween;
+        this._rookies[id] = tween;
     }
 
     /**
@@ -24,8 +26,8 @@ export class TweeNGroup {
      * @param id 編號, 不傳代表取得全部工作中的緩動
      */
     public get(id?: number): TweeN[] {
-        // TODO
-        return [];
+        let list = this._working;
+        return id ? [list[id]] : Object.keys(list).map(id => { return list[id]; });
     } 
 
     /**
@@ -33,14 +35,18 @@ export class TweeNGroup {
      * @param ref 緩動或是編號
      */
     public remove(ref: TweeN | number): void {
-        // TODO
+        let id = ref instanceof TweeN ? ref.id : ref;
+        this._working[id] = null;
+        this._rookies[id] = null;
     }
 
     /**
      * 移除全部
      */
     public removeAll(): void {
-        // TODO
+        Object.keys(this._working).forEach(id => this.remove(Number(id)), this);
+        this._working = {};
+        this._rookies = {};
     }
 
     /**
@@ -48,7 +54,26 @@ export class TweeNGroup {
      * @param dt 
      */
     public update(dt: number): void {
-        // TODO
+        let keys = Object.keys(this._working);
+        let len = keys.length;
+
+        while (len > 0) {
+            this._rookies = {};
+
+            for (let i = 0; i < len; i++) {
+                let id = keys[i];
+                let tween = this._working[id];
+
+                // 已完畢
+                if (tween && tween.update(dt)) {
+                    this._working[id] = null;
+                }
+            }
+
+            // 處理過程中新加入的緩動
+            keys = Object.keys(this._rookies);
+            len = keys.length;
+        }
     }
 }
 
