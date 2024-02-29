@@ -1,4 +1,5 @@
-import { Singleton } from "../util/singleton";
+import { TimerCmpt } from "../cmpt/timer-cmpt";
+import { SingleMgr, Singleton } from "../util/singleton";
 import { TweeN } from "./twee-n";
 
 /**
@@ -88,7 +89,7 @@ export class FixedTweeN extends TweeNGroup implements Singleton {
      * 初始化
      */
     public init(): void {
-        // TODO
+        SingleMgr.get(TimerCmpt).addFixed(this.update);
     }
 }
 
@@ -103,6 +104,6 @@ export class BounceTweeN extends TweeNGroup implements Singleton {
      * 初始化
      */
     public init(): void {
-        // TODO
+        SingleMgr.get(TimerCmpt).addBounce(this.update);
     }
 }
