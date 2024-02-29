@@ -67,6 +67,7 @@ export class TweeN {
     constructor(value: number, group: TweeNGroup = SingleMgr.get(FixedTweeN)) {
         this._pid = TweeN._count++;
         this._begin = value;
+        this._curr = value;
         this._group = group;
     }
 
@@ -76,8 +77,64 @@ export class TweeN {
      * @returns 是否已經完畢
      */
     public update(dt: number): boolean {
-        // TODO
-        return false;
+        if (dt <= 0 || this._stared === false || this._paused) {
+            return false;
+        }
+
+        // 延遲開始
+        if (this._delay > 0) {
+            this._delay -= dt;
+
+            if (this._delay > 0) {
+                return false;
+            }
+            else {
+                // 已經開始一段時間
+                dt = Math.abs(this._delay);
+                this._delay = 0;
+
+                // 開始回調
+                this._onStart?.call(this, this._curr);
+            }
+        }
+
+        // 計算剩餘時間
+        this._left -= dt;
+
+        // 處理漸變
+        if (this._left > 0) {
+            let rate = ((this._time - this._left) / this._time).limit(0, 1);
+            this._curr = this._begin + (this._fade * this._easing(rate));
+        }
+        // 已處理完畢或有超時
+        else {
+            dt = Math.abs(this._left);
+            this._left = 0;
+            this._curr = this._end;
+        }
+
+        // 更新回調
+        this._onUpdate?.call(this, this._curr);
+
+        // 已經完成或有超時
+        if (this._left <= 0) {
+            this._onComplete?.call(this, this._curr);
+
+            this._stared = false;
+            this._group.remove(this);
+
+            // 有接續的緩動
+            if (this._next) {
+                this._next.start();
+                this._next.update(dt);  // 將超過的時間交給後面處理
+            }
+
+            return true;
+        }
+        // 未完成
+        else {
+            return false;
+        }
     }
 
     /**
@@ -85,7 +142,8 @@ export class TweeN {
      * @param act 
      */
     public then(act: TweeN[]): this {
-        // TODO
+        this._next ??= act.shift();
+        act.length > 0 && this._next.then(act);
         return this;
     }
 
@@ -95,7 +153,11 @@ export class TweeN {
      * @param value 終值
      */
     public to(sec: number, value: number): this {
-        // TODO
+        this._end = value;
+        this._fade = value - this._begin;
+        this._time = sec.limit(0, Math.abs(sec));
+        this._left = this._time;
+
         return this;
     }
 
