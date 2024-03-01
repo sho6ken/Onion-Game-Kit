@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, SceneAsset } from 'cc';
 import { SingleMgr, Singleton } from '../util/singleton';
 import { EventMgr } from '../event/event-mgr';
+import { EventConf } from '../conf/event-conf';
 
 const { ccclass, property, menu, disallowMultiple, executionOrder } = _decorator;
 
@@ -109,7 +110,7 @@ export class TimerCmpt extends Component implements Singleton {
                 this._currScale = value;
 
                 // 全局事件觸發
-                SingleMgr.get(EventMgr).emit(`TimerScale`, value);
+                SingleMgr.get(EventMgr).emit(EventConf.TimerScale, value);
             }
         }
     }

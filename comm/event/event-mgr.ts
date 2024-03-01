@@ -1,9 +1,10 @@
+import { EventConf } from "../conf/event-conf";
 import { SingleMgr, Singleton } from "../util/singleton";
 
 /**
  * 事件種類
  */
-export type EventType = string;
+export type EventType = string | EventConf;
 
 /**
  * 事件管理
