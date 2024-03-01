@@ -110,7 +110,7 @@ export class TimerCmpt extends Component implements Singleton {
                 this._currScale = value;
 
                 // 全局事件觸發
-                SingleMgr.get(EventMgr).emit(EventConf.TimerScale, value);
+                SingleMgr.get(EventMgr).emit(EventConf.Scale, value);
             }
         }
     }
