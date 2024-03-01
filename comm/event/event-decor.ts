@@ -1,3 +1,4 @@
+import { EventConf } from "../conf/event-conf";
 import { SingleMgr } from "../util/singleton";
 import { EventMgr, EventType } from "./event-mgr";
 
@@ -83,7 +84,9 @@ export function eventVar(type: EventType): Function {
 
             if (value !== old) {
                 this[field] = value;
-                SingleMgr.get(EventMgr).emit(type, value, old);
+
+                let str = typeof type == `string` ? type : EventConf[type];
+                SingleMgr.get(EventMgr).emit(str, value, old);
             }
         }
 
