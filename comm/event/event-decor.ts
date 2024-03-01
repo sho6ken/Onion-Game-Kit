@@ -70,8 +70,8 @@ export function eventVar(type: EventType): Function {
         let field = `_${name}`;
 
         Object.defineProperty(self, field, {
-            writable    : true,
-            enumerable  : true,
+            writable: true,
+            enumerable: true,
             configurable: true,
         });
 
@@ -91,9 +91,9 @@ export function eventVar(type: EventType): Function {
         }
 
         Object.defineProperty(self, name, {
-            get         : getter,
-            set         : setter,
-            enumerable  : true,
+            get: getter,
+            set: setter,
+            enumerable: true,
             configurable: true,
         });
     }
