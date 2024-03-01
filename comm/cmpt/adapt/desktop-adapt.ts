@@ -1,28 +1,30 @@
-import { _decorator, Component, Node, UITransform, view, Widget, screen, size } from 'cc';
+import { _decorator, Component, Node, UITransform, screen, size, Sprite, math } from 'cc';
 import { eventFunc } from '../../event/event-decor';
 import { EventConf } from '../../conf/event-conf';
-import { EDITOR } from 'cc/env';
 
 const { ccclass, property, menu, requireComponent } = _decorator;
 
 /**
- * widget適配
- * @summary 將widget寬高設與canvas相同
+ * desktop適配
+ * @summary 將圖片切出一塊區域後再縮放至與canvas同寬高
  */
 @ccclass
-@menu(`adapt/widget`)
-@requireComponent(Widget)
+@menu(`adapt/desktop`)
+@requireComponent(Sprite)
 @requireComponent(UITransform)
-export class WidgetAdapt extends Component {
+export class DesktopAdapt extends Component {
     //
     private _trans: UITransform = null;
+
+    // 
+    private _img: Sprite = null;
 
     /**
      * 
      */
     protected onEnable(): void {
         this._trans = this.getComponent(UITransform);
-        this._trans.setContentSize(view.getDesignResolutionSize());
+        this._img = this.getComponent(Sprite);
 
         this.adjust();
     }
@@ -32,17 +34,15 @@ export class WidgetAdapt extends Component {
      */
     @eventFunc(EventConf.Resize)
     private adjust(): void {
-        if (this._trans) {
+        if (this._trans && this._img) {
             let from = size(this._trans.width, this._trans.height);
-            let ref = EDITOR ? view.getDesignResolutionSize() : screen.windowSize;
+            let ref = screen.windowSize;
 
             let scale = Math.min(ref.width / from.width, ref.height / from.height);
             let to = size(from.width * scale, from.height * scale);
 
-            let width = from.width * (ref.width / to.width);
-            let height = from.height * (ref.height / to.height);
-
-            this._trans.setContentSize(width, height);
+            let rate = Math.max(ref.width / to.width, ref.height / to.height);
+            this.node.scale = math.v3(rate, rate, 1);
         }
     }
 }
