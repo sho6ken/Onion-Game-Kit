@@ -19,6 +19,7 @@ export class TimerCmpt extends Component implements Singleton {
 
     // 當前時間縮放
     private _currScale: number = 1;
+    public static get currScale(): number { return TimerCmpt.inst ? TimerCmpt.inst._currScale : 1; }
 
     // 最後時間縮放
     private _lastScale: number = 1;
