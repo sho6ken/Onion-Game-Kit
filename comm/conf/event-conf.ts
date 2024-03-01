@@ -3,5 +3,5 @@
  */
 export enum EventConf {
     Scale,   // 遊戲時間縮放
-    Resize,  // canvas尺寸調整
+    Resize,  // canvas尺寸調整(僅web生效)
 }
