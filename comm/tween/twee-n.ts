@@ -2,7 +2,7 @@ import { SingleMgr } from "../util/singleton";
 import { FixedTweeN, TweeNGroup } from "./twee-n-group";
 
 /**
- * 自製簡易緩動
+ * 簡易緩動
  * @summary 因為要處理如暫停加速...等等額外功能, 但又不想修改引擎
  * @summary 只處理單個數值的變化
  */
