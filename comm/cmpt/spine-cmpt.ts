@@ -1,8 +1,8 @@
 import { _decorator, Component, Node, sp } from 'cc';
 import { eventClass, eventFunc } from '../event/event-decor';
-import { EventConf } from '../conf/event-conf';
 import { TimerCmpt } from './timer-cmpt';
 import { WaitUtil } from '../util/wait-util';
+import { EventConf } from '../../conf/event-conf';
 
 const { ccclass, property, menu } = _decorator;
 

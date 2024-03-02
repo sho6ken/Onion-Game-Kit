@@ -1,6 +1,6 @@
 import { sp } from "cc"
-import { SingleMgr } from "../util/singleton"
-import { AssetMgr } from "../asset/asset-mgr"
+import { SingleMgr } from "../comm/util/singleton";
+import { AssetMgr } from "../comm/asset/asset-mgr";
 
 /**
  * spine種類
