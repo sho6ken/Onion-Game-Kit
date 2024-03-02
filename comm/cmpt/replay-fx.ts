@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, ParticleSystem, ParticleSystem2D, sp, Animation } from 'cc';
+import { _decorator, Component, Node, ParticleSystem, ParticleSystem2D, sp, Animation, CCBoolean } from 'cc';
 import { SPINE_TRACK } from './spine-cmpt';
 
 const { ccclass, property } = _decorator;
@@ -9,7 +9,7 @@ const { ccclass, property } = _decorator;
 @ccclass
 export class ReplayFX extends Component {
     // 重整
-    @property(Boolean)
+    @property(CCBoolean)
     public get refresh(): boolean { return false; }
     public set refresh(value: boolean) { this.research(); }
 
