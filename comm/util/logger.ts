@@ -4,6 +4,7 @@
  */
 export enum LogType {
     Trace = 1,  // 標準日誌
+    Net = 2,    // 網路相關
 }
 
 /**
@@ -11,7 +12,8 @@ export enum LogType {
  * @summary 編號對齊類型
  */
 const LogConf: { [type: number]: { title: string, color: string } } = {
-    1: { title: `standard`, color: `color:black;` },
+    1: { title: `trace`, color: `color:black;` },
+    2: { title: `net`, color: `color:#ee7700;` },
 };
 
 /**
@@ -67,6 +69,15 @@ export class Logger {
      */
     public static trace(msg: any, hint: string = ``): void {
         this.print(LogType.Trace, msg, hint);
+    }
+
+    /**
+     * 打印網路日誌
+     * @param msg 
+     * @param hint 
+     */
+    public static net(msg: any, hint: string = ``): void {
+        this.print(LogType.Net, msg, hint);
     }
 
     /**
