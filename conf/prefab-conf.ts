@@ -6,7 +6,7 @@ import { SingleMgr } from "../comm/util/singleton";
  * prefab種類
  */
 export enum PrefabType{
-    None = "路徑",  // 無
+    None = `路徑`,  // 無
 }
 
 /**
@@ -17,7 +17,7 @@ const setting = {
     HOLD: false,
 
     // 包體名稱
-    BUNDLE: "prefab",
+    BUNDLE: `prefab`,
 };
 
 /**

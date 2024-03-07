@@ -167,7 +167,7 @@ export class NetNode {
      */
     public unique(cmd: NetCmd, buf: NetBuf, event: NetObj, tip: boolean = false, force: boolean = false): boolean {
         for (const req of this._requests) {
-            if (req.cmd == cmd) {
+            if (req.cmd === cmd) {
                 Logger.net(`unique false`, cmd);
                 return false;
             }
@@ -225,7 +225,7 @@ export class NetNode {
      * @param buf 
      */
     private onMessage(buf: NetBuf): void {
-        if (this._handler.isPacketLegal(buf) == false) {
+        if (this._handler.isPacketLegal(buf) === false) {
             Logger.net(`rcv illegal`);
             return;
         }
@@ -240,7 +240,7 @@ export class NetNode {
         for (const idx in this._requests) {
             let req = this._requests[idx];
 
-            if (req.cmd == cmd) {
+            if (req.cmd === cmd) {
                 req.event.event.call(req.event.obj, cmd, buf);
                 this._requests.splice(Number(idx), 1);
                 break;
@@ -317,7 +317,7 @@ export class NetNode {
      * @param obj 觸發對象
      */
     public register(cmd: NetCmd, event: NetEvent, obj?: any): void {
-        if (this._listeners.has(cmd) == false) {
+        if (this._listeners.has(cmd) === false) {
             this._listeners.set(cmd, []);
         }
 
