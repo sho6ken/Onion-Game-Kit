@@ -19,7 +19,7 @@ export interface CmptPoolObj {
 /**
  * 組件池
  */
-export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
+export class CmptPool extends ObjPool<Component, Node> {
     // 名稱
     public get name(): string { return this.constructor.name; }
 
@@ -27,7 +27,7 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
      * 取得物件
      * @param key 
      */
-    public get(key: { prototype: Component }): Node {
+    public get(key: Component): Node {
         return this.getCmpt(key).node;
     }
 
@@ -35,7 +35,7 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
      * 取得物件
      * @param key 
      */
-    public getObj(key: { prototype: Component }): Node {
+    public getObj(key: Component): Node {
         return this.getCmpt(key).node;
     }
 
@@ -43,10 +43,10 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
      * 取得組件
      * @param key 
      */
-    public getCmpt<T extends Component>(key: { prototype: T }): T {
+    public getCmpt<T extends Component>(key: Component): T {
         let value = super.get(key);
 
-        let cmpt: any = value?.getComponent(key.prototype.name);
+        let cmpt: any = value?.getComponent(key.name);
         cmpt && cmpt.reuse && cmpt.reuse();
 
         return <T>cmpt;
@@ -57,8 +57,8 @@ export class CmptPool extends ObjPool<{ prototype: Component }, Node> {
      * @param key 
      * @param value 
      */
-    public put(key: { prototype: Component }, value: Node): boolean {
-        let cmpt: any = value.getComponent(key.prototype.name);
+    public put(key: Component, value: Node): boolean {
+        let cmpt: any = value.getComponent(key.name);
         cmpt && cmpt.unuse && cmpt.unuse();
 
         return super.put(key, value);
