@@ -1,5 +1,5 @@
 import { AssetMgr } from "../comm/asset/asset-mgr";
-import { Prefab } from "cc";
+import { Node, Prefab, instantiate } from "cc";
 import { SingleMgr } from "../comm/util/singleton";
 
 /**
@@ -26,4 +26,12 @@ const setting = {
  */
 export const getPrefab = async function(type: PrefabType): Promise<Prefab> {
     return await SingleMgr.get(AssetMgr).loadLocal(Prefab, type, setting.HOLD, setting.BUNDLE);
+}
+
+/**
+ * 生成prefab
+ * @param type prefab種類 
+ */
+export const genPrefab = async function(type: PrefabType): Promise<Node> {
+    return instantiate(await getPrefab(type));
 }

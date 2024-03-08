@@ -13,7 +13,7 @@ export class ReplayFX extends Component {
     public get refresh(): boolean { return false; }
     public set refresh(value: boolean) { this.research(); }
 
-    // 3d粒子
+    // 3d粒子, 執行時如果報warn, 是因為`項目設置/功能剪裁/3D粒子系統`為關閉, 簡單說就是實作專案沒必要使用到3d粒子
     @property([ParticleSystem])
     public p3d: ParticleSystem[] = [];
 
